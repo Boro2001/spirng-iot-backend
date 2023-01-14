@@ -15,10 +15,10 @@ public class MqttPubSubService {
     public static final String topic = "intopic";
 
     MqttPubSubService() throws AWSIotException {
-        String clientEndpoint = "a3c8kw37dysoug-ats.iot.eu-west-1.amazonaws.com";   // use value returned by describe-endpoint --endpoint-type "iot:Data-ATS"
-        String clientId = "esp_32";                              // replace with your own client ID. Use unique client IDs for concurrent connections.
-        String certificateFile = "/Users/mikolajborowicz/Desktop/all-policy/68b43f4e830436b8cd5d246374376688b91f3c07fef6e7afd58baf2a2e26fc54-certificate.pem.crt";                       // X.509 based certificate file
-        String privateKeyFile = "/Users/mikolajborowicz/Desktop/all-policy/68b43f4e830436b8cd5d246374376688b91f3c07fef6e7afd58baf2a2e26fc54-private.pem.key";
+        String clientEndpoint = "ag8bpew4rvau3-ats.iot.eu-west-1.amazonaws.com";   // use value returned by describe-endpoint --endpoint-type "iot:Data-ATS"
+        String clientId = "spring-app";                              // replace with your own client ID. Use unique client IDs for concurrent connections.
+        String certificateFile = "/home/ec2-user/credentials2/2d801a703b265c3c2b40e6eaec6261b8b9acd1bf949eaad76ec741fd38d886c2-certificate.pem.crt";                       // X.509 based certificate file
+        String privateKeyFile = "/home/ec2-user/credentials2/2d801a703b265c3c2b40e6eaec6261b8b9acd1bf949eaad76ec741fd38d886c2-private.pem.key";
         KeyStorePasswordPair pair = SampleUtil.getKeyStorePasswordPair(certificateFile, privateKeyFile);
         AWSIotMqttClient client = new AWSIotMqttClient(clientEndpoint, clientId, pair.keyStore, pair.keyPassword);
         client.connect();
