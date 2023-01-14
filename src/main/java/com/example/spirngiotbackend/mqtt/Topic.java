@@ -53,12 +53,26 @@ public class Topic extends AWSIotTopic {
 
     }
     private RecordDTO parseToRecord(String record) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        RecordDTO rec =  objectMapper.readValue(record, RecordDTO.class);
-        if(rec==null){
-            System.out.println("jebongo");
-        }
-        return rec;
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        RecordDTO rec =  objectMapper.readValue(record, RecordDTO.class);
+//        if(rec==null){
+//            System.out.println("jebongo");
+//        }
+//        return rec;/
+
+        int index = record.indexOf(':');
+        String id = record.substring(index + 1, record.indexOf(',', index));
+        index = record.indexOf(':', index + 1);
+        String deviceId = record.substring(index + 1, record.indexOf(',', index));
+        index = record.indexOf(':', index + 1);
+        String userId = record.substring(index + 1, record.indexOf(',', index));
+        index = record.indexOf(':', index + 1);
+        String temp_string = record.substring(index + 1, record.indexOf(',', index));
+        int temp = Integer.parseInt(temp_string);
+        index = record.indexOf(':', index + 1);
+        String timestamp = record.substring(index + 1, record.indexOf('}', index));
+
+        return new RecordDTO(id, deviceId, userId, temp, timestamp);
     }
 
 
