@@ -1,21 +1,18 @@
-package com.example.spirngiotbackend;
+package com.example.spirngiotbackend.mqtt;
 
 import com.amazonaws.services.iot.client.AWSIotMqttClient;
 import com.amazonaws.services.iot.client.AWSIotException;
-import com.amazonaws.services.iot.client.AWSIotMessage;
 import com.amazonaws.services.iot.client.AWSIotQos;
-import com.amazonaws.services.iot.client.AWSIotTimeoutException;
-import com.amazonaws.services.iot.client.AWSIotTopic;
-import com.amazonaws.services.iot.client.sample.sampleUtil.CommandArguments;
 import com.amazonaws.services.iot.client.sample.sampleUtil.SampleUtil;
 import com.amazonaws.services.iot.client.sample.sampleUtil.SampleUtil.KeyStorePasswordPair;
+import com.example.spirngiotbackend.service.RecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class MqttPubSubService {
     public static final String topic = "intopic";
-
 
     MqttPubSubService() throws AWSIotException {
         String clientEndpoint = "a3c8kw37dysoug-ats.iot.eu-west-1.amazonaws.com";   // use value returned by describe-endpoint --endpoint-type "iot:Data-ATS"
@@ -35,7 +32,6 @@ public class MqttPubSubService {
         client.subscribe(topic);
 
     }
-    public void publishMessage(){
-
+    public void publishMessage(String message){
     }
 }
