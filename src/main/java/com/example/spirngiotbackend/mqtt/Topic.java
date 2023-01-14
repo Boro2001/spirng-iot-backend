@@ -3,6 +3,7 @@ package com.example.spirngiotbackend.mqtt;
 import com.amazonaws.services.iot.client.AWSIotMessage;
 import com.amazonaws.services.iot.client.AWSIotQos;
 import com.amazonaws.services.iot.client.AWSIotTopic;
+import com.example.spirngiotbackend.model.RecordDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoClient;
@@ -28,10 +29,10 @@ public class Topic extends AWSIotTopic {
     @Override
     public void onMessage(AWSIotMessage message) {
         try {
-                Record record = parseToRecord(message.getStringPayload());
-            System.out.println(record.toString());
+            RecordDTO record= parseToRecord(message.getStringPayload());
+            System.out.println(record);
             Document newDocument = new Document();
-            newDocument.append("_id", record.getId());
+            newDocument.append("id", record.getId());
             newDocument.append("deviceId", record.getDeviceId());
             newDocument.append("userId", record.getUserId());
             newDocument.append("temp", record.getTemp());
@@ -51,9 +52,13 @@ public class Topic extends AWSIotTopic {
 
 
     }
-    private Record parseToRecord(String record) throws JsonProcessingException {
+    private RecordDTO parseToRecord(String record) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(record, Record.class);
+        RecordDTO rec =  objectMapper.readValue(record, RecordDTO.class);
+        if(rec==null){
+            System.out.println("jebongo");
+        }
+        return rec;
     }
 
 
