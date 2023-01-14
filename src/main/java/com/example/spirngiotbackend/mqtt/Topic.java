@@ -72,7 +72,7 @@ public class Topic extends AWSIotTopic {
         index = record.indexOf(':', index + 1);
         String timestamp = record.substring(index + 1, record.indexOf('}', index));
 
-        return new RecordDTO(id, deviceId, userId, temp, timestamp);
+        return new RecordDTO(id.replace("\"" ,""), deviceId.replace("\"" ,""), userId.replace("\"" ,""), temp, timestamp.replace("\"" ,""));
     }
 
 
