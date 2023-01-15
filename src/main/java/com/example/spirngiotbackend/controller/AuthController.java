@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -56,7 +56,7 @@ public class AuthController {
         return ResponseEntity.ok(new TokenDTO(user.getId(), accessToken, refreshTokenString));
     }
 
-    @PostMapping("signup")
+    @PostMapping("/register")
     @Transactional
     public ResponseEntity<?> signup( @RequestBody SignupDTO dto) {
         User user = new User(dto.getUsername(), passwordEncoder.encode(dto.getPassword()));
@@ -72,7 +72,7 @@ public class AuthController {
         return ResponseEntity.ok(new TokenDTO(user.getId(), accessToken, refreshTokenString));
     }
 
-    @PostMapping("logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestBody TokenDTO dto) {
         String refreshTokenString = dto.getRefreshToken();
         if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
@@ -84,7 +84,7 @@ public class AuthController {
         throw new BadCredentialsException("invalid token");
     }
 
-    @PostMapping("logout-all")
+    @PostMapping("/logout-all")
     public ResponseEntity<?> logoutAll(@RequestBody TokenDTO dto) {
         String refreshTokenString = dto.getRefreshToken();
         if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
@@ -97,7 +97,7 @@ public class AuthController {
         throw new BadCredentialsException("invalid token");
     }
 
-    @PostMapping("access-token")
+    @PostMapping("/access-token")
     public ResponseEntity<?> accessToken(@RequestBody TokenDTO dto) {
         String refreshTokenString = dto.getRefreshToken();
         if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
@@ -112,7 +112,7 @@ public class AuthController {
         throw new BadCredentialsException("invalid token");
     }
 
-    @PostMapping("refresh-token")
+    @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@RequestBody TokenDTO dto) {
         String refreshTokenString = dto.getRefreshToken();
         if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
