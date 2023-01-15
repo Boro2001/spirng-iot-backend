@@ -1,6 +1,5 @@
 package com.example.spirngiotbackend.controller;
 
-import com.example.spirngiotbackend.http.HttpResponse;
 import com.example.spirngiotbackend.model.Record;
 import com.example.spirngiotbackend.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
