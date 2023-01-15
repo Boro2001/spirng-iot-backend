@@ -38,7 +38,6 @@ public class AccessTokenFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             log.error("cannot set authentication", e);
         }
-
         filterChain.doFilter(request, response);
     }
 
@@ -49,4 +48,5 @@ public class AccessTokenFilter extends OncePerRequestFilter {
         }
         return Optional.empty();
     }
+
 }
