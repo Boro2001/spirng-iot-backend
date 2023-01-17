@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 public class CrudController {
-
     private final RecordService recordService;
 
     @Autowired

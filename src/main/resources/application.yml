@@ -3,5 +3,11 @@ spring:
     mongodb:
       uri: mongodb+srv://esp_admin:dupa1234@mongo-storage.7zu4pph.mongodb.net/?retryWrites=true&w=majority
       database: esp32metrics
-  main:
-    allow-bean-definition-overriding: true
+
+# App Properties
+com:
+  example:
+    jwtSecret:
+      bezKoderSecretKey
+    jwtExpirationMs:
+      86400000
