@@ -20,12 +20,12 @@ public class CrudController {
     public CrudController(RecordService recordService) {
         this.recordService = recordService;
     }
-    @PostMapping("api/v1/records")
+    @PostMapping("api/records")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public void addRecord(@RequestBody Record record){
         recordService.addRecord(record);
     }
-    @GetMapping("api/v1/records")
+    @GetMapping("api/records")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<Record> getAllRecords(){
         return recordService.getAllRecords();
