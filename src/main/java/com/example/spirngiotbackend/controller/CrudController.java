@@ -36,7 +36,8 @@ public class CrudController {
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public Record getRecordForUser(@PathVariable String username){
         int size = recordService.getAllRecordsForUser(username).size()-1;
-        assert size >= 0;
+        if(size<0)return new Record(" "," ",1," ");
+
         return recordService.getAllRecordsForUser(username).get(size);
     }
 
