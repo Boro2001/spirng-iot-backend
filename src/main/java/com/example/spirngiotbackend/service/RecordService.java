@@ -26,5 +26,9 @@ public class RecordService {
         return recordRepository.findAll();
     }
 
+    public List<Record> getAllRecordsForUser(String username){
+        return recordRepository.findAllByUserId(username);
+    }
+
 
 }

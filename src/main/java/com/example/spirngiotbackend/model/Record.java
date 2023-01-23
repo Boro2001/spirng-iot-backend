@@ -13,6 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @AllArgsConstructor
 public class Record {
+    public Record(String deviceId, String userId, int temp, String timestamp) {
+        this.deviceId = deviceId;
+        this.userId = userId;
+        this.temp = temp;
+        this.timestamp = timestamp;
+    }
 
     @Id
     private String id;
