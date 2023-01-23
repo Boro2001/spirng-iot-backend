@@ -32,18 +32,18 @@ public class CrudController {
         return recordService.getAllRecords();
     }
 
-    @GetMapping("api/records/{username}")
+    @GetMapping("api/record/{username}")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public List<Record> getRecordsForUser(@PathVariable String username){
-
-        return recordService.getAllRecords();
+    public Record getRecordForUser(@PathVariable String username){
+        int size = recordService.getAllRecordsForUser(username).size()-1;
+        assert size >= 0;
+        return recordService.getAllRecordsForUser(username).get(size);
     }
 
     @PostMapping("api/devices")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public void registerDeviceForUser(@RequestBody RegisterDto registerDto){
         Device device = new Device(registerDto.getDeviceId(), registerDto.getUsername());
-        if(device.getId()==null) System.out.println("JESTEŚMY ZGUBIENI");
         deviceRepository.save(device);
 
     }
