@@ -8,8 +8,10 @@ import com.example.spirngiotbackend.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.comparator.Comparators;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,18 +42,17 @@ public class CrudController {
         String username1 = " " + username;
         System.out.println(username1);
         List<Record> records = recordService.getAllRecords();
-        records.stream()
-            .filter(record -> record.getUserId()
-                    .equals(username1)).forEach(record -> System.out.println("FOUND:" + record.getUserId()));
-        if(records.stream()
-                .filter(record -> record.getUserId()
-                        .equals(username1)).toList().size() > 0){
-            return records.stream()
-                    .filter(record -> record.getUserId()
-                            .equals(username1)).toList().get(0);
-        }
-        return new Record(" "," ",1," ");
+        List<Record> record_sorted;
+        // sort records by object id
+        record_sorted = records.stream().filter(record -> record.getUserId().equals(username1)).collect(Collectors.toList());
 
+        Record topRecord = record_sorted.get(0);
+        for (Record record : record_sorted) {
+            if(record.getTimestampAsDate().after(topRecord.getTimestampAsDate())){
+                topRecord = record;
+            }
+        }
+        return topRecord;
     }
 
     @PostMapping("api/devices")

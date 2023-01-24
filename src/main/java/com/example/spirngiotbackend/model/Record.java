@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document
 @Data
 @ToString
@@ -25,6 +27,9 @@ public class Record {
     private int temp;
     private String timestamp;
 
+    public Date getTimestampAsDate() {
+        return new Date(Long.parseLong(timestamp.substring(1)));
+    }
 
 
 
