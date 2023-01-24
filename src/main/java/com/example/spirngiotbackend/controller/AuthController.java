@@ -11,6 +11,12 @@ import com.example.spirngiotbackend.payload.SignupRequest;
 import com.example.spirngiotbackend.repository.RoleRepository;
 import com.example.spirngiotbackend.repository.UserRepository;
 import com.example.spirngiotbackend.service.UserDetailsImpl;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,6 +51,20 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    private MongoCollection<Document> collection;
+    private MongoDatabase database;
+    MongoClient mongoClient;
+
+    private void connectToDb(){
+        mongoClient = MongoClients.create("mongodb+srv://esp_admin:dupa1234@mongo-storage.7zu4pph.mongodb.net/?retryWrites=true&w=majority");
+        database = mongoClient.getDatabase("esp32metrics");
+        collection = database.getCollection("device");
+    }
+
+    public AuthController() {
+        connectToDb();
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -59,9 +79,22 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        System.out.println("getting records");
+        Document filter = new Document("username", loginRequest.getUsername());
+        Bson bson = collection.find(filter).sort(new Document("timestamp", -1)).first();
+
+        String deviceId;
+        if(bson != null) {
+           deviceId = bson.toBsonDocument().get("deviceId").asString().getValue();
+        }
+        else {
+            deviceId = "no device";
+        }
+        System.out.println("deviceId: " + deviceId);
+
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
-                userDetails.getUsername(),
+                deviceId,
                 userDetails.getEmail(),
                 roles));
     }
