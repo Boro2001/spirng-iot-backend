@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface RecordRepository extends MongoRepository<Record, String> {
-    public List<Record>findAllByUserId(String username);
+    public List<Record> findByUserId(String username);
+    public List<Record> findAllByUserId(String username);
 }
 

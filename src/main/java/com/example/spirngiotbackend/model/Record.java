@@ -1,9 +1,6 @@
 package com.example.spirngiotbackend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @ToString
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Record {
     public Record(String deviceId, String userId, int temp, String timestamp) {
@@ -26,6 +24,8 @@ public class Record {
     private String userId;
     private int temp;
     private String timestamp;
+
+
 
 
 }
