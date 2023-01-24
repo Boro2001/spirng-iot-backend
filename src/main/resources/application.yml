@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://esp_admin:dupa1234@mongo-storage.7zu4pph.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb+srv://iot-admin-2:ZaWpjEPs7i7uExw@mongo-storage.7zu4pph.mongodb.net/?retryWrites=true&w=majority
       database: esp32metrics
 
 # App Properties

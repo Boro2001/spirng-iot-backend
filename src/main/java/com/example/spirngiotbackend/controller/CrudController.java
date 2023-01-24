@@ -36,9 +36,9 @@ public class CrudController {
         return recordService.getAllRecords();
     }
 
-    @GetMapping("api/record/{username}")
+    @GetMapping("api/record/{username}/{deviceId}")
     @PreAuthorize("hasRole('USER')")
-    public Record getRecordForUser(@PathVariable String username){
+    public Record getRecordForUser(@PathVariable String username, @PathVariable String deviceId){
         String username1 = " " + username;
         System.out.println(username1);
         List<Record> records = recordService.getAllRecords();

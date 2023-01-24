@@ -16,13 +16,13 @@ public class RecordService {
 
 
     public void addRecord(Record record) {
-        System.out.println("siemano");
+
         recordRepository.save(record);
-        System.out.println("siemano1");
+
     }
 
     public List<Record> getAllRecords(){
-        System.out.println("siemano");
+
         return recordRepository.findAll();
     }
 
