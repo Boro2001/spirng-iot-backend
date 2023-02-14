@@ -13,6 +13,8 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import com.example.spirngiotbackend.model.Record;
 
+import java.util.List;
+
 
 public class Topic extends AWSIotTopic {
 
@@ -24,7 +26,11 @@ public class Topic extends AWSIotTopic {
         super(topic, qos);
         connectToDb();
     }
-
+//
+//
+//    public List<Record> getDataForUserAndDevice(){
+//
+//    }
 
     @Override
     public void onMessage(AWSIotMessage message) {
@@ -49,16 +55,9 @@ public class Topic extends AWSIotTopic {
         mongoClient = MongoClients.create("mongodb+srv://esp_admin:dupa1234@mongo-storage.7zu4pph.mongodb.net/?retryWrites=true&w=majority");
         database = mongoClient.getDatabase("esp32metrics");
         collection = database.getCollection("record");
-
-
     }
     private RecordDTO parseToRecord(String record) throws JsonProcessingException {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        RecordDTO rec =  objectMapper.readValue(record, RecordDTO.class);
-//        if(rec==null){
-//            System.out.println("jebongo");
-//        }
-//        return rec;/
+
 
         int index = record.indexOf(':');
         String id = record.substring(index + 1, record.indexOf(',', index));
